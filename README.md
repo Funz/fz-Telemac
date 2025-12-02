@@ -29,10 +29,10 @@ pip install git+https://github.com/Funz/fz.git
 ```python
 import fz
 results = fz.fzr(
-    input_path="t2d_breach.cas/",
+    input_path="examples/Telemac/t2d_breach.cas/",
     input_variables={}, # no variables to vary in this test case
     model="Telemac", # refers to .fz/models/Telemac.json
-    calculators="localhost", # refers to .fz/calculators/localhost.json
+    calculators="localhost_Telemac", # refers to .fz/calculators/localhost_Telemac.json
     results_dir="results" # directory to store results
 )
 
@@ -87,7 +87,7 @@ xy2=150.0,250.0
 
 **Telemac.sh**: Basic script (including post-processing to get CSV output files) for local Telemac installation, using docker. Modify the path to Telemac binaries to use yours if needed.
 
-The calculator configuration is defined in `.fz/calculators/localhost.json`:
+The calculator configuration is defined in `.fz/calculators/localhost_Telemac.json`:
 
 ```json
 {
@@ -136,8 +136,8 @@ A sample Telemac case (`t2d_breach.cas`) is included in this repository, demonst
 
 Create a parametric study from this case by varying parameters such as breach width and duration: edit the breach.txt file to include variables like `$(breach_width)` and `$(breach_delay)`:
 ```bash
-sed -i 's/50.0/$(breach_width)/' t2d_breach.cas/breach.txt
-sed -i 's/300.0/$(breach_delay)/' t2d_breach.cas/breach.txt
+sed -i 's/50.0/$(breach_width)/' examples/Telemac/t2d_breach.cas/breach.txt
+sed -i 's/300.0/$(breach_delay)/' examples/Telemac/t2d_breach.cas/breach.txt
 ```
 
 Then run the parametric study:
@@ -152,10 +152,10 @@ input_variables = {
 
 # Run parametric study
 results_grid = fz.fzr(
-    input_path="t2d_breach.cas/",
+    input_path="examples/Telemac/t2d_breach.cas/",
     input_variables=input_variables,
     model="Telemac",
-    calculators=["localhost"]*2, # Use 2 parallel local calculators
+    calculators=["localhost_Telemac"]*2, # Use 2 parallel local calculators
     results_dir="results_grid"
 )
 

@@ -1,0 +1,126 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test Plugin Structure
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    
+    - name: Install fz framework
+      run: |
+        pip install git+https://github.com/Funz/fz.git
+     
+    - name: Validate JSON files
+      run: |
+        echo "Validating model files..."
+        for f in .fz/models/*.json; do
+          echo "  Checking $f"
+          python -m json.tool "$f" > /dev/null
+        done
+        echo "Validating calculator config files..."
+        for f in .fz/calculators/*.json; do
+          echo "  Checking $f"
+          python -m json.tool "$f" > /dev/null
+        done
+    
+    - name: Check shell script syntax
+      run: |
+        echo "Checking shell scripts..."
+        for f in .fz/calculators/*.sh; do
+          echo "  Checking $f"
+          bash -n "$f"
+        done
+    
+    - name: Test fzi (parse variables)
+      run: |
+        python -c "
+        import fz
+        import os
+        # Find a .cas file in examples
+        cas_dir = 'examples/Telemac/t2d_breach.cas'
+        if os.path.exists(cas_dir):
+            variables = fz.fzi(cas_dir, 'Telemac')
+            print(f'Variables found: {list(variables.keys())}')
+            print('✓ fzi test passed')
+        else:
+            print('⚠ No example case directory found, skipping fzi test')
+        "
+    
+    - name: Test fzc (compile input)
+      run: |
+        python -c "
+        import fz
+        import tempfile
+        import os
+        cas_dir = 'examples/Telemac/t2d_breach.cas'
+        if os.path.exists(cas_dir):
+            with tempfile.TemporaryDirectory() as tmpdir:
+                fz.fzc(cas_dir, {}, 'Telemac', output_dir=tmpdir)
+                print('✓ fzc test passed')
+        else:
+            print('⚠ No example case directory found, skipping fzc test')
+        "
+
+    - name: Run plugin tests
+      run: |
+        python tests/test_plugin.py
+    
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Check shell scripts are executable
+      run: |
+        for f in .fz/calculators/*.sh; do
+          if [ ! -x "$f" ]; then
+            echo "Error: $f is not executable"
+            exit 1
+          fi
+        done
+
+  docs:
+    name: Check Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Check required documentation files
+      run: |
+        for f in README.md LICENSE; do
+          if [ ! -f "$f" ]; then
+            echo "Error: Missing $f"
+            exit 1
+          fi
+          echo "✓ $f exists"
+        done
+    
+    - name: Check example files
+      run: |
+        if [ ! -d "examples/Telemac" ]; then
+          echo "Error: Missing examples/Telemac directory"
+          exit 1
+        fi
+        echo "✓ Example files present"
