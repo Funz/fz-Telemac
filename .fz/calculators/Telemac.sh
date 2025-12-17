@@ -6,7 +6,7 @@ if [ -d "$1" ]; then
   CAS=`ls *.cas | head -n 1`
   shift
 # if $* are files, find the .cas file
-elif [ $# -gt 1 ]; then
+elif [ $# -gt 0 ]; then
   CAS=""
   for f in "$@"; do
     if [ `echo $f | grep -c '\.cas$'` -eq 1 ]; then
