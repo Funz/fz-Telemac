@@ -29,9 +29,12 @@ if [ 1 -le `echo \`pwd -P\` | grep --color='auto' -P -n "[\x80-\xFF]" | wc -l` ]
   exit 3
 fi
 
-NCPU=`grep ^cpu\\\\scores /proc/cpuinfo | uniq |  awk '{print $4}'`
+#NCPU=`grep ^cpu\\\\scores /proc/cpuinfo | uniq |  awk '{print $4}'`
+NCPU=`nproc`
+#NCPU=`nproc | awk '{print $1/4}'`
 
-docker run -v `echo $PWD`:/workdir irsn/telemac-mascaret:latest telemac2d.py --ncsize=$NCPU $CAS &
+docker run -e I_MPI_HYDRA_BOOTSTRAP=fork -e I_MPI_ROOT_GTOOL_BYPASS=1 -v `echo $PWD`:/workdir irsn/telemac-mascaret:latest telemac2d.py --ncsize=$NCPU $CAS &
+#podman run --ipc=host -e I_MPI_HYDRA_BOOTSTRAP=fork -e I_MPI_ROOT_GTOOL_BYPASS=1 -v `echo $PWD`:/workdir docker.io/irsn/telemac-mascaret:latest telemac2d.py --ncsize=$NCPU $CAS &
 
 PID=$!
 echo $PID >> PID
@@ -43,15 +46,17 @@ rm -f PID
 ## pip install https://github.com/CNR-Engineering/PyTelTools/zipball/master
 ## From example from https://github.com/CNR-Engineering/PyTelTools/blob/master/notebook/Post-processing%20examples.ipynb :
 
-# test if PyTelTools is installed, otherwise install it in a tmp venv
-python3 -c 'import pyteltools' 2>/dev/null
-if [ $? -ne 0 ]; then
-  echo "Installing PyTelTools in temporary venv"
-  TMPDIR=`mktemp -d`
-  python3 -m venv $TMPDIR/venv
-  source $TMPDIR/venv/bin/activate
-  pip install https://github.com/CNR-Engineering/PyTelTools/zipball/master
-  trap "rm -rf $TMPDIR" EXIT
+# test if PyTelTools is installed, otherwise install it in a fixed venv
+PYTELTOOLS_VENV="$HOME/.pyteltools_venv"
+if [ ! -d "$PYTELTOOLS_VENV" ] || [ ! -f "$PYTELTOOLS_VENV/bin/activate" ]; then
+  echo "Installing PyTelTools in $PYTELTOOLS_VENV"
+  python3 -m venv "$PYTELTOOLS_VENV"
+  source "$PYTELTOOLS_VENV/bin/activate"
+  pip install --upgrade pip > /dev/null 2>&1
+  pip install https://github.com/CNR-Engineering/PyTelTools/zipball/master > /dev/null 2>&1
+  echo "PyTelTools installed successfully"
+else
+  source "$PYTELTOOLS_VENV/bin/activate"
 fi
 
 function interpolate_poi () {
