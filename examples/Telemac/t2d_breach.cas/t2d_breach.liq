@@ -1,5 +1,5 @@
-# Fichier des frontières liquides transitoires
-# Généré le 17 déc. 2009
+# Fichier des frontiÃ¨res liquides transitoires
+# GÃ©nÃ©rÃ© le 17 dÃ©c. 2009
 T SL(1) Q(2)
 s m m2/s
 0.0 0.87 50.0

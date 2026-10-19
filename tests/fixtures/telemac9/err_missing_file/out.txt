@@ -1,0 +1,42 @@
+fz-Telemac: docker run --rm -e I_MPI_HYDRA_BOOTSTRAP=fork -e I_MPI_ROOT_GTOOL_BYPASS=1 -v /home/user/case/fail2:/workdir -w /workdir irsn/telemac-mascaret:latest telemac2d.py --ncsize=1 t2d_breach.cas
+
+
+Loading Options and Configurations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+      _               _                
+     | |             | |               
+   __| |  ___    ___ | | __  ___  _ __ 
+  / _` | / _ \  / __|| |/ / / _ \| '__|
+ | (_| || (_) || (__ |   < |  __/| |   
+  \__,_| \___/  \___||_|\_\ \___||_|   
+                                       
+                                       
+
+
+Running your CAS file(s) for:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+intelmpi: 
+    
+
+    +> Intel Fortran with Intel MPI
+
+    +> root:    /opt/telemac-mascaret
+    +> module: ad / api / artemis / bief
+               damocles  / gaia  / gretel  / hermes
+               identify_liq_bnd  / khione  / mascaret  / nestor
+               parallel  / partel  / postel3d  / special
+               stbtel  / telemac2d  / telemac3d  / tomawac
+               waqtel
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+... processing the steering file
+  ~> Checking keyword/rubrique coherence

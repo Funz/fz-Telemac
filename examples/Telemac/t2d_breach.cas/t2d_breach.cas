@@ -22,7 +22,9 @@ BREACHES DATA FILE     ='breach.txt'
 / ENTREES-SORTIES, GENERALITES
 /---------------------------------------------------------------------
 /
-COMPUTATION CONTINUED =true
+/ Telemac <= 8 only (boolean keyword removed in 9.0: PREVIOUS COMPUTATION FILE
+/ alone continues the computation):
+/ COMPUTATION CONTINUED =true
 /
 /-------------------------------------------------------------------
 /---
@@ -82,7 +84,9 @@ OPTION FOR LIQUID BOUNDARIES =1;1
 / PARAMETRES NUMERIQUES
 /---------------------------------------------------------------------
 /
-BREACH                                     =YES
+/ Telemac <= 8 only (boolean keyword removed in 9.0: BREACHES DATA FILE alone
+/ activates the breaches):
+/ BREACH                                     =YES
 /
 TREATMENT OF THE LINEAR SYSTEM             =2
 /

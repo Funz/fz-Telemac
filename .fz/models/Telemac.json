@@ -1,11 +1,31 @@
 {
     "id": "Telemac",
-    "varprefix": "$", 
-    "formulaprefix": "@", 
-    "delim": "()", 
+    "varprefix": "$",
+    "var_delim": "()",
+    "formulaprefix": "@",
+    "formula_delim": "{}",
     "commentline": "/",
     "output": {
-        "S": "python -c 'import pandas;import glob;import json;print(json.dumps({f.split(\"_S.csv\")[0]:pandas.read_csv(f).to_dict() for f in glob.glob(\"*_S.csv\")}))'",
-        "H": "python -c 'import pandas;import glob;import json;print(json.dumps({f.split(\"_H.csv\")[0]:pandas.read_csv(f).to_dict() for f in glob.glob(\"*_H.csv\")}))'"
+        "telemac_status": "python://(lambda re, t, e: 'NO OUTPUT' if t is None and e is None else 'ERROR: ' + m.group(1).strip() if (m := re.search(r'^(?:error: )?((?:cannot read|no RESULTS FILE|No result file|Cannot extract POI|POI ).*)$', e or '', re.M)) else 'NORMAL END' if 'My work is done' in (t or '') else 'ERROR: ' + (' '.join(' '.join((lambda ls: ls[max([i for i, l in enumerate(ls) if not l.strip() or 'ITERATION' in l or '====' in l] + [-1]) + 1:])(t[:t.find('PLANTE')].rstrip().splitlines())).split())[:300] or 'PLANTE: PROGRAM STOPPED AFTER AN ERROR') if 'PLANTE' in (t or '') else 'ERROR: ' + next((l.strip() for l in e[e.find('could not complete my work'):].splitlines()[1:] if l.strip() and set(l.strip()) != {'~'}), 'could not complete my work') if 'could not complete my work' in (e or '') else 'ERROR: ' + ' '.join(m[-1].split()) if (m := re.findall(r'^\\w[\\w.]*(?:Exception|Error): (.*(?:\\n[ \\t]+\\S.*)*)', e or '', re.M)) else 'ERROR: ' + m.group(0).strip() if (m := re.search(r'^(?:Telemac not found|Telemac launcher not found|Cannot source TELEMAC_PROFILE|Unsupported TELEMAC_CONTAINER|Telemac does not support|No Telemac steering file|Telemac failed).*$', e or '', re.M)) else 'NO END BANNER' if t is not None else 'NO OUTPUT')(re, read('out.txt') if (base_dir / 'out.txt').is_file() else None, read('err.txt') if (base_dir / 'err.txt').is_file() else None)",
+        "T": "python://np.loadtxt(base_dir / 'T.csv', ndmin=1).tolist() if (base_dir / 'T.csv').is_file() else None",
+        "xy": "python://(lambda d: d or None)({p.name[3:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('xy_*.csv')) if p.name[3] != '.'})",
+        "U": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('U_*.csv')) if p.name[2] != '.'})",
+        "V": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('V_*.csv')) if p.name[2] != '.'})",
+        "C": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('C_*.csv')) if p.name[2] != '.'})",
+        "H": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('H_*.csv')) if p.name[2] != '.'})",
+        "S": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('S_*.csv')) if p.name[2] != '.'})",
+        "B": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('B_*.csv')) if p.name[2] != '.'})",
+        "F": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('F_*.csv')) if p.name[2] != '.'})",
+        "Q": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('Q_*.csv')) if p.name[2] != '.'})",
+        "I": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('I_*.csv')) if p.name[2] != '.'})",
+        "J": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('J_*.csv')) if p.name[2] != '.'})",
+        "M": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('M_*.csv')) if p.name[2] != '.'})",
+        "D": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('D_*.csv')) if p.name[2] != '.'})",
+        "W": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('W_*.csv')) if p.name[2] != '.'})",
+        "L": "python://(lambda d: d or None)({p.name[2:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('L_*.csv')) if p.name[2] != '.'})",
+        "MAXZ": "python://(lambda d: d or None)({p.name[5:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('MAXZ_*.csv')) if p.name[5] != '.'})",
+        "TMXZ": "python://(lambda d: d or None)({p.name[5:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('TMXZ_*.csv')) if p.name[5] != '.'})",
+        "MAXV": "python://(lambda d: d or None)({p.name[5:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('MAXV_*.csv')) if p.name[5] != '.'})",
+        "TMXV": "python://(lambda d: d or None)({p.name[5:-4]: (lambda a: a[:, 0].tolist() if a.shape[1] == 1 else a.tolist())(np.loadtxt(p, delimiter=',', ndmin=2)) for p in sorted(base_dir.glob('TMXV_*.csv')) if p.name[5] != '.'})"
     }
 }

@@ -24,7 +24,7 @@ def test_model_files():
         ".fz/models/Telemac.json"
     ]
     
-    required_fields = ["id", "varprefix", "delim", "commentline", "output"]
+    required_fields = ["id", "varprefix", "var_delim", "formulaprefix", "formula_delim", "commentline", "output"]
     
     for model_file in models:
         print(f"  Checking {model_file}...", end=" ")
@@ -80,7 +80,8 @@ def test_calculator_scripts():
     print("Testing calculator shell scripts...")
     
     scripts = [
-        ".fz/calculators/Telemac.sh"
+        ".fz/calculators/Telemac.sh",
+        ".fz/calculators/telemac_poi.py"
     ]
     
     for script_file in scripts:
@@ -102,7 +103,14 @@ def test_example_files():
     print("Testing example files...")
     
     examples = [
-        "examples/Telemac/t2d_breach.cas"
+        "examples/Telemac/t2d_breach.cas/t2d_breach.cas",
+        "examples/Telemac/t2d_breach.cas/t2d_breach.poi",
+        # files referenced by t2d_breach.cas
+        "examples/Telemac/t2d_breach.cas/geo_breach.slf",
+        "examples/Telemac/t2d_breach.cas/ini_breach.slf",
+        "examples/Telemac/t2d_breach.cas/geo_breach.cli",
+        "examples/Telemac/t2d_breach.cas/t2d_breach.liq",
+        "examples/Telemac/t2d_breach.cas/breach.txt"
     ]
     
     for example_path in examples:

@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/opt/telemac-mascaret/scripts/python3/telemac2d.py", line 9, in <module>
+    sys.exit(main('telemac2d'))
+  File "/opt/telemac-mascaret/scripts/python3/runcode.py", line 287, in main
+    run_study(cas_file, code_name, options)
+  File "/opt/telemac-mascaret/scripts/python3/execution/run_cas.py", line 164, in run_study
+    my_study = Study(
+  File "/opt/telemac-mascaret/scripts/python3/execution/study.py", line 133, in __init__
+    self.cas = TelemacCas(self.steering_file, self.dico_file)
+  File "/opt/telemac-mascaret/scripts/python3/execution/telemac_cas.py", line 116, in __init__
+    self._check_content()
+  File "/opt/telemac-mascaret/scripts/python3/execution/telemac_cas.py", line 274, in _check_content
+    raise TelemacException(
+utils.exceptions.TelemacException: Unknown keyword BREACH in steering file t2d_breach.cas
+Telemac failed (exit code 1): see the listing in out.txt/err.txt
