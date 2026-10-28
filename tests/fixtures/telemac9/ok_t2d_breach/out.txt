@@ -1,0 +1,130 @@
+fz-Telemac: docker run --rm -e I_MPI_HYDRA_BOOTSTRAP=fork -e I_MPI_ROOT_GTOOL_BYPASS=1 -v /home/user/case/real/.fz/tmp/fz_temp_b82b3b507a19_1792395684:/workdir -w /workdir irsn/telemac-mascaret:latest telemac2d.py --ncsize=2 t2d_breach.cas
+
+
+Loading Options and Configurations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+      _               _                
+     | |             | |               
+   __| |  ___    ___ | | __  ___  _ __ 
+  / _` | / _ \  / __|| |/ / / _ \| '__|
+ | (_| || (_) || (__ |   < |  __/| |   
+  \__,_| \___/  \___||_|\_\ \___||_|   
+                                       
+                                       
+
+
+Running your CAS file(s) for:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+intelmpi: 
+    
+
+    +> Intel Fortran with Intel MPI
+
+    +> root:    /opt/telemac-mascaret
+    +> module: ad / api / artemis / bief
+               damocles  / gaia  / gretel  / hermes
+               identify_liq_bnd  / khione  / mascaret  / nestor
+               parallel  / partel  / postel3d  / special
+               stbtel  / telemac2d  / telemac3d  / tomawac
+               waqtel
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+... processing the steering file
+  ~> Checking keyword/rubrique coherence
+
+... checking parallelisation
+
+... handling temporary directories
+         copying: t2d_breach.cas -> /workdir/t2d_breach.cas_2026-10-19-09h41min29s/T2DCAS
+         copying: telemac2d.dico -> /workdir/t2d_breach.cas_2026-10-19-09h41min29s/T2DDICO
+         copying: geo_breach.cli -> /workdir/t2d_breach.cas_2026-10-19-09h41min29s/T2DCLI
+         copying: t2d_breach.liq -> /workdir/t2d_breach.cas_2026-10-19-09h41min29s/T2DIMP
+         copying: geo_breach.slf -> /workdir/t2d_breach.cas_2026-10-19-09h41min29s/T2DGEO
+         copying: ini_breach.slf -> /workdir/t2d_breach.cas_2026-10-19-09h41min29s/T2DPRE
+         copying: breach.txt -> /workdir/t2d_breach.cas_2026-10-19-09h41min29s/T2DBRC
+
+... partitioning base files (geo, conlim, sections, zones and weirs)
+     +> /opt/telemac-mascaret/builds/intelmpi/bin/partel < partel_T2DGEO.par >> partel_T2DGEO.log
+
+... splitting / copying other input files
+    duplicating: T2DIMP
+  partitioning: T2DPRE
+     +> /opt/telemac-mascaret/builds/intelmpi/bin/partel < partel_T2DPRE.par >> partel_T2DPRE.log
+
+... checking the executable
+
+
+Running your simulation(s) :
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+In /workdir/t2d_breach.cas_2026-10-19-09h41min29s:
+mpirun -np 2 /workdir/t2d_breach.cas_2026-10-19-09h41min29s/out_telemac2d
+
+
+[0] MPI startup(): I_MPI_ROOT_GTOOL_BYPASS environment variable is not supported.
+[0] MPI startup(): To check the list of supported variables, use the impi_info utility or refer to https://software.intel.com/en-us/mpi-library/documentation/get-started.
+ MASTER PROCESSOR NUMBER            0  OF THE GROUP OF            2
+ EXECUTABLE FILE: /workdir/t2d_breach.cas_2026-10-19-09h41min29s/A.EXE
+ LISTING OF TELEMAC2D
+ ------------------------------------------------------------------------------
+[... 9997 lines removed from this fixture ...]
+ GRACJG (BIEF) :        4 ITERATIONS, ABSOLUTE PRECISION:   0.8400918E-05
+ POSITIVE DEPTHS OBTAINED IN    38 ITERATIONS
+--------------------------------------------------------------------------------
+                       BALANCE OF WATER VOLUME
+     VOLUME IN THE DOMAIN :    745392.2     M3
+     FLUX BOUNDARY    1:    -81.29405     M3/S  ( >0 : ENTERING  <0 : EXITING )
+     FLUX BOUNDARY    2:     406.2064     M3/S  ( >0 : ENTERING  <0 : EXITING )
+     RELATIVE ERROR IN VOLUME AT T =        2700.     S :    0.2103244E-15
+--------------------------------------------------------------------------------
+                   FINAL BALANCE OF WATER VOLUME
+
+     RELATIVE ERROR CUMULATED ON VOLUME:    0.1717980E-14
+
+     INITIAL VOLUME              :     271560.9     M3
+     FINAL VOLUME                :     745392.2     M3
+     VOLUME THAT ENTERED THE DOMAIN:     473831.3     M3  ( IF <0 EXIT )
+     TOTAL VOLUME LOST             :    0.1280569E-08 M3
+ PRERES: MAXIMUM COURANT NUMBER:    0.9570939
+
+ END OF TIME LOOP
+
+ EXITING MPI
+
+                     *************************************
+                     *    END OF MEMORY ORGANIZATION:    *
+                     *************************************
+
+ CORRECT END OF RUN
+
+ ELAPSE TIME :
+                             45  SECONDS
+0
+0
+... merging separated result files
+
+     collecting: T2DRES
+     +> /opt/telemac-mascaret/builds/intelmpi/bin/gretel < gretel_T2DRES.par >> gretel_T2DRES.log
+... handling result files
+
+        moving: r2d_breach.slf
+... deleting working dir
+
+
+
+My work is done
+
+
+/home/user/case/real/.fz/tmp/fz_temp_b82b3b507a19_1792395684/r2d_breach.slf: 8 variables (U, V, H, S, B, D, W, L), 13648 nodes, 46 frames
+wrote 33 CSV files in /home/user/case/real/.fz/tmp/fz_temp_b82b3b507a19_1792395684

@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/opt/telemac-mascaret/scripts/python3/telemac2d.py", line 9, in <module>
+    sys.exit(main('telemac2d'))
+  File "/opt/telemac-mascaret/scripts/python3/runcode.py", line 287, in main
+    run_study(cas_file, code_name, options)
+  File "/opt/telemac-mascaret/scripts/python3/execution/run_cas.py", line 170, in run_study
+    run_local_cas(my_study, options)
+  File "/opt/telemac-mascaret/scripts/python3/execution/run_cas.py", line 66, in run_local_cas
+    my_study.run(options)
+  File "/opt/telemac-mascaret/scripts/python3/execution/study.py", line 655, in run
+    self.run_local()
+  File "/opt/telemac-mascaret/scripts/python3/execution/study.py", line 475, in run_local
+    run_code(self.run_cmd, self.sortie_file)
+  File "/opt/telemac-mascaret/scripts/python3/execution/run.py", line 180, in run_code
+    raise TelemacException(f'Failed to run {exe}\n')
+utils.exceptions.TelemacException: Failed to run mpirun -np 1 /workdir/t2d_breach.cas_2026-10-19-09h42min54s/out_telemac2d
+
+Telemac failed (exit code 1): see the listing in out.txt/err.txt

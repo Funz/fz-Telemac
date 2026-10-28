@@ -25,7 +25,9 @@ jobs:
     
     - name: Install fz framework
       run: |
-        pip install git+https://github.com/Funz/fz.git
+        pip install git+https://github.com/Funz/fz.git pytest numpy
+        # No fz.install('Telemac') here: it would overwrite the checked-out .fz/
+        # with the published plugin, so CI would not test this commit.
      
     - name: Validate JSON files
       run: |
@@ -47,6 +49,7 @@ jobs:
           echo "  Checking $f"
           bash -n "$f"
         done
+        python -m py_compile .fz/calculators/telemac_poi.py
     
     - name: Test fzi (parse variables)
       run: |
@@ -81,6 +84,10 @@ jobs:
     - name: Run plugin tests
       run: |
         python tests/test_plugin.py
+
+    - name: Test POI extraction, output parsing and fzr (fake Telemac launcher, real result file)
+      run: |
+        pytest tests/ -v
     
   lint:
     name: Lint
@@ -92,7 +99,7 @@ jobs:
     
     - name: Check shell scripts are executable
       run: |
-        for f in .fz/calculators/*.sh; do
+        for f in .fz/calculators/*.sh .fz/calculators/*.py; do
           if [ ! -x "$f" ]; then
             echo "Error: $f is not executable"
             exit 1

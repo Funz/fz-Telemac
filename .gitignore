@@ -1,5 +1,5 @@
 # Results and temporary files
-results/
+results*/
 *.out
 *.msg
 *.html
@@ -14,12 +14,10 @@ __pycache__/
 venv/
 ENV/
 .venv
+.pytest_cache/
 
 # fz temporary files
 .fz/tmp/
-
-# Large binary files
-*.slf
 
 # OS
 .DS_Store

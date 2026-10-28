@@ -1,7 +1,7 @@
 # Nombre de Breches
 3
 # Definition de la Breche amont
-# Largeur d'emprise du polygone de définition de la breche
+# Largeur d'emprise du polygone de dÃ©finition de la breche
 50.0
 # Option pour la gestion de l'ouverture
 2
@@ -51,7 +51,7 @@
 2096.10	40.00
 2099.10	40.00
 # Definition de la Breche centrale
-# Largeur d'emprise du polygone de définition de la breche
+# Largeur d'emprise du polygone de dÃ©finition de la breche
 60.0
 # Option pour la gestion de l'ouverture
 3
@@ -61,7 +61,7 @@
 2
 # Cote finale de la breche
 5.5
-# Numéro (maillage global) du point de controle de la breche
+# NumÃ©ro (maillage global) du point de controle de la breche
 9406
 # Cote de controle de la breche
 6.0
@@ -103,7 +103,7 @@
 2546.55	40.00
 2549.55	40.00
 # Definition de la Breche aval
-# Largeur d'emprise du polygone de définition de la breche
+# Largeur d'emprise du polygone de dÃ©finition de la breche
 50.0
 # Option pour la gestion de l'ouverture
 1
